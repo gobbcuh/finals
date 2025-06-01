@@ -21,14 +21,32 @@ header {
   align-items: center;
 }
 
-.search-menu input {
+.search-toggle {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.search-input {
   padding: 5px;
   margin-right: 10px;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 0.3s ease, opacity 0.3s ease;
+}
+
+.search-input:focus {
+  max-width: 200px;
+  opacity: 1;
 }
 
 .search-menu .menu {
   font-size: 24px;
   color: #fff;
+  padding: 0 5px;
 }
 
 .background-image {
@@ -51,7 +69,6 @@ header {
 }
 
 .text-overlay {
-  background-color: #ffe6f0;
   padding: 20px;
   display: inline-block;
 }
@@ -69,7 +86,8 @@ header {
   transform: translateX(-50%);
   padding: 10px 20px;
   background-color: #ffe6f0;
-  border: none;
+  border: black 2px solid;
+  border-radius: 25px;
   font-size: 18px;
   cursor: pointer;
 }
