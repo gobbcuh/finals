@@ -9,6 +9,7 @@ header {
   align-items: center;
   padding: 10px 20px;
   background-color: #000;
+  height: 50px;   
 }
 
 .header-icon {
