@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.focus();
         searchInput.addEventListener('blur', function() {
             this.remove();
-            document.querySelector('.search-toggle').style.display = 'block';
+            document.querySelector('.search-toggle').style-display = 'block';
         });
     });
 
@@ -83,16 +84,21 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(form);
-        fetch('/api/login', {
+        fetch('/finals/api/login', { // Updated URL with context path
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             messageElement.textContent = data.message;
             messageElement.style.color = data.message.includes('successful') ? 'green' : 'red';
             if (data.message.includes('successful')) {
-                setTimeout(() => window.location.href = 'index.html', 1000); // Redirect to index.html on success
+                setTimeout(() => window.location.href = 'index.html', 1000);
             }
         })
         .catch(error => {
@@ -104,3 +110,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+```

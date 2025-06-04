@@ -104,11 +104,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const formData = new FormData(form);
-        fetch('/api/register', {
+        fetch('/finals/api/register', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.text().then(text => ({ status: response.status, text }));
+        })
+        .then(({ status, text }) => {
+            console.log('Raw response:', text);
+            if (!status.toString().startsWith('2')) {
+                throw new Error(`HTTP error! Status: ${status}`);
+            }
+            return JSON.parse(text);
+        })
         .then(data => {
             messageElement.textContent = data.message;
             messageElement.style.color = data.message.includes('successful') ? 'green' : 'red';

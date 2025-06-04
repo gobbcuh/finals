@@ -18,7 +18,7 @@
 		<button class="search-toggle">🔍︎</button>
 		<div class="menu">☰</div>
 		<div class="dropdown-menu">
-			<a href="#logout">Log out</a>
+			<a href="#" id="logout-link">Log out</a>
 			<a href="#faqs">FAQs</a>
 		</div>
 	</div>
@@ -45,6 +45,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const menu = document.querySelector('.menu');
     const dropdown = document.querySelector('.dropdown-menu');
+    const logoutLink = document.querySelector('#logout-link');
 
     if (!menu || !dropdown) {
         console.error('Menu or dropdown not found in DOM');
@@ -79,6 +80,23 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Clicked outside, hiding dropdown');
             dropdown.style.display = 'none';
         }
+    });
+
+    logoutLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        fetch('/finals/api/logout', {
+            method: 'GET'
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'index.html';
+            } else {
+                console.error('Logout failed:', response.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error during logout:', error);
+        });
     });
 });
 </script>

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/api/login")
@@ -23,6 +24,9 @@ public class LoginServlet extends HttpServlet {
 
             User user = userService.loginUser(email, password);
             if (user != null) {
+                // Set user email in session
+                HttpSession session = req.getSession();
+                session.setAttribute("userEmail", email);
                 resp.setStatus(HttpServletResponse.SC_OK);
                 mapper.writeValue(resp.getWriter(), new ResponseMessage("Login successful"));
             } else {
@@ -30,6 +34,7 @@ public class LoginServlet extends HttpServlet {
                 mapper.writeValue(resp.getWriter(), new ResponseMessage("Invalid email or password"));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             mapper.writeValue(resp.getWriter(), new ResponseMessage("Login failed: " + e.getMessage()));
         }

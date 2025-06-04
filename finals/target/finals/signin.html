@@ -83,16 +83,26 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(form);
-        fetch('/api/login', {
+        fetch('/finals/api/login', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.text().then(text => ({ status: response.status, text }));
+        })
+        .then(({ status, text }) => {
+            console.log('Raw response:', text);
+            if (!status.toString().startsWith('2')) {
+                throw new Error(`HTTP error! Status: ${status}`);
+            }
+            return JSON.parse(text);
+        })
         .then(data => {
             messageElement.textContent = data.message;
             messageElement.style.color = data.message.includes('successful') ? 'green' : 'red';
             if (data.message.includes('successful')) {
-                setTimeout(() => window.location.href = 'index.html', 1000); // Redirect to index.html on success
+                setTimeout(() => window.location.href = 'menu.html', 1000); // Redirect to menu.html
             }
         })
         .catch(error => {
