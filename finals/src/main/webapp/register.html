@@ -27,7 +27,7 @@
 	<div class="background-overlay">
 		<div class="register-container">
 			<h1>Register</h1>
-			<form class="register-form">
+			<form class="register-form" id="register-form">
 				<div class="form-group">
 					<label for="full-name">Full Name</label>
 					<input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required>
@@ -50,6 +50,7 @@
 				</div>
 				<button type="submit" class="submit-button">Register</button>
 			</form>
+			<p id="register-message"></p>
 			<p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
 		</div>
 	</div>
@@ -58,13 +59,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const menu = document.querySelector('.menu');
     const dropdown = document.querySelector('.dropdown-menu');
+    const form = document.querySelector('#register-form');
+    const messageElement = document.querySelector('#register-message');
 
     if (!menu || !dropdown) {
         console.error('Menu or dropdown not found in DOM');
         return;
     }
-
-    console.log('Menu and dropdown elements found:', menu, dropdown);
 
     document.querySelector('.search-toggle').addEventListener('click', function() {
         const searchInput = document.createElement('input');
@@ -81,17 +82,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     menu.addEventListener('click', function(event) {
-        console.log('Menu clicked, current dropdown display:', dropdown.style.display);
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        console.log('Dropdown display set to:', dropdown.style.display);
         event.stopPropagation();
     });
 
     document.addEventListener('click', function(event) {
         if (!dropdown.contains(event.target) && !menu.contains(event.target)) {
-            console.log('Clicked outside, hiding dropdown');
             dropdown.style.display = 'none';
         }
+    });
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const password = document.querySelector('#password').value;
+        const confirmPassword = document.querySelector('#confirm-password').value;
+
+        if (password !== confirmPassword) {
+            messageElement.textContent = 'Passwords do not match';
+            messageElement.style.color = 'red';
+            return;
+        }
+
+        const formData = new FormData(form);
+        fetch('/api/register', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            messageElement.textContent = data.message;
+            messageElement.style.color = data.message.includes('successful') ? 'green' : 'red';
+            if (data.message.includes('successful')) {
+                setTimeout(() => window.location.href = 'signin.html', 1000);
+            }
+        })
+        .catch(error => {
+            messageElement.textContent = 'Error: ' + error.message;
+            messageElement.style.color = 'red';
+        });
     });
 });
 </script>
