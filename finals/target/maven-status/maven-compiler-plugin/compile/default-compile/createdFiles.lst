@@ -1,4 +1,6 @@
 com\example\finals\LoginServlet$ResponseMessage.class
+com\example\finals\AuthFilter.class
+com\example\finals\LogoutServlet.class
 com\example\finals\RegisterServlet.class
 com\example\finals\UserService.class
 com\example\finals\User.class

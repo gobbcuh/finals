@@ -22,9 +22,14 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
+            if (email == null || password == null) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                mapper.writeValue(resp.getWriter(), new ResponseMessage("Missing email or password"));
+                return;
+            }
+
             User user = userService.loginUser(email, password);
             if (user != null) {
-                // Set user email in session
                 HttpSession session = req.getSession();
                 session.setAttribute("userEmail", email);
                 resp.setStatus(HttpServletResponse.SC_OK);
@@ -40,7 +45,6 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    // Helper class for JSON response
     private static class ResponseMessage {
         private String message;
 

@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,20 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const formData = new FormData(form);
-        fetch('/finals/api/register', {
+        fetch('/finals/api/register', { // Updated URL with context path
             method: 'POST',
             body: formData
         })
         .then(response => {
-            console.log('Response status:', response.status);
-            return response.text().then(text => ({ status: response.status, text }));
-        })
-        .then(({ status, text }) => {
-            console.log('Raw response:', text);
-            if (!status.toString().startsWith('2')) {
-                throw new Error(`HTTP error! Status: ${status}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return JSON.parse(text);
+            return response.json();
         })
         .then(data => {
             messageElement.textContent = data.message;
@@ -135,3 +131,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+```
