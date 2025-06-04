@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="style3.css">
+</head>
+<body>
+<header>
+	<img src="elements/logo.png" alt="Hexagon Icon" class="header-icon">
+	<div class="search-menu">
+		<button class="search-toggle">🔍︎</button>
+		<div class="menu">☰</div>
+		<div class="dropdown-menu">
+			<a href="register.html">Register</a>
+			<a href="#faqs">FAQs</a>
+		</div>
+	</div>
+</header>
+<main>
+	<div class="background-overlay">
+		<div class="register-container">
+			<h1>Register</h1>
+			<form class="register-form" id="register-form">
+				<div class="form-group">
+					<label for="full-name">Full Name</label>
+					<input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required>
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" id="email" name="email" placeholder="Enter your email" required>
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" placeholder="Enter your password" required>
+				</div>
+				<div class="form-group">
+					<label for="confirm-password">Confirm Password</label>
+					<input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+				</div>
+				<div class="form-group">
+					<label for="phone">Phone Number</label>
+					<input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+				</div>
+				<button type="submit" class="submit-button">Register</button>
+			</form>
+			<p id="register-message"></p>
+			<p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
+		</div>
+	</div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.querySelector('.menu');
+    const dropdown = document.querySelector('.dropdown-menu');
+    const form = document.querySelector('#register-form');
+    const messageElement = document.querySelector('#register-message');
+
+    if (!menu || !dropdown) {
+        console.error('Menu or dropdown not found in DOM');
+        return;
+    }
+
+    document.querySelector('.search-toggle').addEventListener('click', function() {
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search';
+        searchInput.className = 'search-input';
+        this.parentNode.insertBefore(searchInput, this.nextSibling);
+        this.style.display = 'none';
+        searchInput.focus();
+        searchInput.addEventListener('blur', function() {
+            this.remove();
+            document.querySelector('.search-toggle').style.display = 'block';
+        });
+    });
+
+    menu.addEventListener('click', function(event) {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        event.stopPropagation();
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!dropdown.contains(event.target) && !menu.contains(event.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const password = document.querySelector('#password').value;
+        const confirmPassword = document.querySelector('#confirm-password').value;
+
+        if (password !== confirmPassword) {
+            messageElement.textContent = 'Passwords do not match';
+            messageElement.style.color = 'red';
+            return;
+        }
+
+        const formData = new FormData(form);
+        fetch('/api/register', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            messageElement.textContent = data.message;
+            messageElement.style.color = data.message.includes('successful') ? 'green' : 'red';
+            if (data.message.includes('successful')) {
+                setTimeout(() => window.location.href = 'signin.html', 1000);
+            }
+        })
+        .catch(error => {
+            messageElement.textContent = 'Error: ' + error.message;
+            messageElement.style.color = 'red';
+        });
+    });
+});
+</script>
+</body>
+</html>
