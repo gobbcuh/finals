@@ -9,7 +9,7 @@ header {
   align-items: center;
   padding: 10px 20px;
   background-color: #000;
-  height: 50px;   
+  height: 50px;
 }
 
 .header-icon {
@@ -20,6 +20,7 @@ header {
 .search-menu {
   display: flex;
   align-items: center;
+  position: relative; /* Anchor for dropdown */
 }
 
 .search-toggle {
@@ -50,6 +51,7 @@ header {
   font-size: 24px;
   color: #fff;
   padding: 0 5px;
+  cursor: pointer; /* Ensure clickable appearance */
 }
 
 .background-image {
@@ -124,4 +126,29 @@ header {
   color: #000;
   cursor: pointer;
   text-transform: uppercase;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 56px;
+    right: 10px; /* Adjusted for alignment */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    display: none;
+    min-width: 120px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    font-family: 'Libre Baskerville', serif;
+    background-color: #fff;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
 }
