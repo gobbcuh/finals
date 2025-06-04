@@ -10,47 +10,77 @@
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="style2.css">
-	</head>
-	<body>
-	<header>
+</head>
+<body>
+<header>
 	<img src="elements/logo.png" alt="Hexagon Icon" class="header-icon">
 	<div class="search-menu">
 		<button class="search-toggle">🔍︎</button>
 		<div class="menu">☰</div>
+		<div class="dropdown-menu">
+			<a href="#register">Register</a>
+			<a href="#faqs">FAQs</a>
+		</div>
 	</div>
-	</header>
-	<main>
+</header>
+<main>
 	<div class="background-overlay">
 		<div class="menu-items">
-		<div class="menu-item">
-			<img src="elements/fork-spoon-icon.png" alt="Foods & Beverages Icon" class="menu-icon">
-			<p>FOODS &<br>BEVERAGES</p>
-		</div>
-		<div class="menu-item">
-			<img src="elements/photo-icon.png" alt="Photos Icon" class="menu-icon">
-			<p>PHOTOS</p>
-		</div>
-		<div class="menu-item">
-			<img src="elements/chat-icon.png" alt="Comments & Suggestions Icon" class="menu-icon">
-			<p>COMMENTS &<br>SUGGESTIONS</p>
-		</div>
+			<div class="menu-item">
+				<img src="elements/fork-spoon-icon.png" alt="Foods & Beverages Icon" class="menu-icon">
+				<p>FOODS &<br>BEVERAGES</p>
+			</div>
+			<div class="menu-item">
+				<img src="elements/photo-icon.png" alt="Photos Icon" class="menu-icon">
+				<p>PHOTOS</p>
+			</div>
+			<div class="menu-item">
+				<img src="elements/chat-icon.png" alt="Comments & Suggestions Icon" class="menu-icon">
+				<p>COMMENTS &<br>SUGGESTIONS</p>
+			</div>
 		</div>
 	</div>
-	</main>
-	<script>
-	document.querySelector('.search-toggle').addEventListener('click', function() {
-		const searchInput = document.createElement('input');
-		searchInput.type = 'text';
-		searchInput.placeholder = 'Search';
-		searchInput.className = 'search-input';
-		this.parentNode.insertBefore(searchInput, this.nextSibling);
-		this.style.display = 'none';
-		searchInput.focus();
-		searchInput.addEventListener('blur', function() {
-		this.remove();
-		document.querySelector('.search-toggle').style.display = 'block';
-		});
-	});
-	</script>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.querySelector('.menu');
+    const dropdown = document.querySelector('.dropdown-menu');
+
+    if (!menu || !dropdown) {
+        console.error('Menu or dropdown not found in DOM');
+        return;
+    }
+
+    console.log('Menu and dropdown elements found:', menu, dropdown);
+
+    document.querySelector('.search-toggle').addEventListener('click', function() {
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search';
+        searchInput.className = 'search-input';
+        this.parentNode.insertBefore(searchInput, this.nextSibling);
+        this.style.display = 'none';
+        searchInput.focus();
+        searchInput.addEventListener('blur', function() {
+            this.remove();
+            document.querySelector('.search-toggle').style.display = 'block';
+        });
+    });
+
+    menu.addEventListener('click', function(event) {
+        console.log('Menu clicked, current dropdown display:', dropdown.style.display);
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        console.log('Dropdown display set to:', dropdown.style.display);
+        event.stopPropagation();
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!dropdown.contains(event.target) && !menu.contains(event.target)) {
+            console.log('Clicked outside, hiding dropdown');
+            dropdown.style.display = 'none';
+        }
+    });
+});
+</script>
 </body>
 </html>
