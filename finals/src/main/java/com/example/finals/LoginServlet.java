@@ -18,9 +18,16 @@ public class LoginServlet extends HttpServlet {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
 
+        // Log all request parameters
+        System.out.println("Received request parameters:");
+        req.getParameterMap()
+                .forEach((key, value) -> System.out.println("Param: " + key + " = " + String.join(", ", value)));
+
         try {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
+            System.out.println("Extracted email: " + email);
+            System.out.println("Extracted password: " + password);
 
             if (email == null || password == null) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
