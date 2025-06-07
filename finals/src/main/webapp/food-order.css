@@ -124,6 +124,10 @@ header {
   position: relative;
 }
 
+.category.main-courses {
+  grid-column: 1 / -1; /* Span full width */
+}
+
 .category h2 {
   font-size: 28px;
   color: #000;
@@ -132,18 +136,21 @@ header {
   text-transform: uppercase;
 }
 
-.category-inner {
-  display: flex;
-  overflow-x: auto;
+.main-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  padding-bottom: 10px; /* Space for scrollbar */
-  scroll-behavior: smooth;
+}
+
+.main-course-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .food-item {
   flex: 0 0 250px;
   text-align: center;
-  margin-bottom: 0;
   padding: 15px;
   border: 1px solid #eee;
   border-radius: 10px;
@@ -155,16 +162,15 @@ header {
   transform: scale(1.05);
 }
 
-.middle-item {
-  border: 3px solid #fdcbdf;
-  box-shadow: 0 6px 15px rgba(253, 203, 223, 0.5);
-}
-
 .food-image {
   width: 200px;
   height: auto;
   border-radius: 10px;
   margin-bottom: 15px;
+}
+
+.main-course-image {
+  width: 220px; /* Slightly larger images for main courses */
 }
 
 .food-item p {
@@ -192,7 +198,12 @@ header {
   transform: scale(1.05);
 }
 
-/* Custom horizontal scrollbar styling */
+.middle-item {
+  border: 3px solid #fdcbdf;
+  box-shadow: 0 6px 15px rgba(253, 203, 223, 0.5);
+}
+
+/* Custom horizontal scrollbar styling (retained for Drinks/Appetizers) */
 .category-inner::-webkit-scrollbar {
   height: 8px;
 }
