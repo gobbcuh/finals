@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Food Menu</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="food-order.css">
+</head>
+<body>
+<header>
+	<img src="elements/logo.png" alt="Hexagon Icon" class="header-icon">
+	<div class="search-menu">
+		<button class="search-toggle">🔍︎</button>
+		<div class="menu">☰</div>
+		<div class="dropdown-menu">
+			<a href="#logout">Log out</a>
+			<a href="#faqs">FAQs</a>
+		</div>
+	</div>
+</header>
+<main>
+	<div class="background-overlay">
+		<div class="order-container">
+			<h1>Food Menu</h1>
+			<div class="categories">
+				<div class="category">
+					<h2>Drinks</h2>
+					<div class="food-item">
+						<img src="elements/drink1.png" alt="Mojito" class="food-image">
+						<p>Mojito</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/drink2.png" alt="Iced Tea" class="food-image">
+						<p>Iced Tea</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/drink3.png" alt="Espresso" class="food-image">
+						<p>Espresso</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+				</div>
+				<div class="category">
+					<h2>Appetizers</h2>
+					<div class="food-item">
+						<img src="elements/app1.jpg" alt="Spring Rolls" class="food-image">
+						<p>Spring Rolls</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/app2.jpg" alt="Garlic Bread" class="food-image">
+						<p>Garlic Bread</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/app3.jpg" alt="Cheese Platter" class="food-image">
+						<p>Cheese Platter</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+				</div>
+				<div class="category">
+					<h2>Main Courses</h2>
+					<div class="food-item">
+						<img src="elements/main1.jpg" alt="Grilled Salmon" class="food-image">
+						<p>Grilled Salmon</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/main2.jpg" alt="Pasta Primavera" class="food-image">
+						<p>Pasta Primavera</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/main3.jpg" alt="Chicken Parmesan" class="food-image">
+						<p>Chicken Parmesan</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/main4.jpg" alt="Beef Stir Fry" class="food-image">
+						<p>Beef Stir Fry</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/main5.jpg" alt="Roast Duck" class="food-image">
+						<p>Roast Duck</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+					<div class="food-item">
+						<img src="elements/main6.jpg" alt="Vegetable Curry" class="food-image">
+						<p>Vegetable Curry</p>
+						<button class="add-button">Add to Order</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.querySelector('.menu');
+    const dropdown = document.querySelector('.dropdown-menu');
+
+    if (!menu || !dropdown) {
+        console.error('Menu or dropdown not found in DOM');
+        return;
+    }
+
+    console.log('Menu and dropdown elements found:', menu, dropdown);
+
+    document.querySelector('.search-toggle').addEventListener('click', function() {
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search';
+        searchInput.className = 'search-input';
+        this.parentNode.insertBefore(searchInput, this.nextSibling);
+        this.style.display = 'none';
+        searchInput.focus();
+        searchInput.addEventListener('blur', function() {
+            this.remove();
+            document.querySelector('.search-toggle').style.display = 'block';
+        });
+    });
+
+    menu.addEventListener('click', function(event) {
+        console.log('Menu clicked, current dropdown display:', dropdown.style.display);
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        console.log('Dropdown display set to:', dropdown.style.display);
+        event.stopPropagation();
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!dropdown.contains(event.target) && !menu.contains(event.target)) {
+            console.log('Clicked outside, hiding dropdown');
+            dropdown.style.display = 'none';
+        }
+    });
+
+    // Highlight middle item on scroll
+    const categories = document.querySelectorAll('.category');
+    categories.forEach(category => {
+        const items = category.querySelectorAll('.food-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const itemRect = entry.target.getBoundingClientRect();
+                const containerRect = category.getBoundingClientRect();
+                const isMiddle = Math.abs(itemRect.left - containerRect.left - (containerRect.width / 2) + (itemRect.width / 2)) < 50; // Approx middle
+                if (isMiddle) {
+                    entry.target.classList.add('middle-item');
+                } else {
+                    entry.target.classList.remove('middle-item');
+                }
+            });
+        }, { threshold: [0] });
+
+        items.forEach(item => observer.observe(item));
+    });
+});
+</script>
+</body>
+</html>

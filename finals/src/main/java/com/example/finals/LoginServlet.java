@@ -2,6 +2,7 @@ package com.example.finals;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @WebServlet("/api/login")
+@MultipartConfig
 public class LoginServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     private UserService userService = new UserServiceImpl();
@@ -22,8 +24,7 @@ public class LoginServlet extends HttpServlet {
 
         // Log all request parameters
         LOGGER.info("Received request parameters:");
-        req.getParameterMap().forEach((key, value) -> 
-            LOGGER.info("Param: " + key + " = " + String.join(", ", value)));
+        req.getParameterMap().forEach((key, value) -> LOGGER.info("Param: " + key + " = " + String.join(", ", value)));
 
         try {
             String email = req.getParameter("email");
