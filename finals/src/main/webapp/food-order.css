@@ -122,6 +122,13 @@ header {
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.category:not(.main-courses) .food-item {
+  flex: 0 0 250px;
 }
 
 .category.main-courses {
@@ -149,7 +156,6 @@ header {
 }
 
 .food-item {
-  flex: 0 0 250px;
   text-align: center;
   padding: 15px;
   border: 1px solid #eee;
@@ -201,23 +207,12 @@ header {
 .middle-item {
   border: 3px solid #fdcbdf;
   box-shadow: 0 6px 15px rgba(253, 203, 223, 0.5);
+  background-color: #fff; /* Solid background to hide default border */
 }
 
-/* Custom horizontal scrollbar styling (retained for Drinks/Appetizers) */
-.category-inner::-webkit-scrollbar {
-  height: 8px;
-}
-
-.category-inner::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 5px;
-}
-
-.category-inner::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
-}
-
-.category-inner::-webkit-scrollbar-thumb:hover {
-  background: #555;
+/* Apply middle-item style to all Main Courses items */
+.main-courses .food-item {
+  border: 3px solid #fdcbdf;
+  box-shadow: 0 6px 15px rgba(253, 203, 223, 0.5);
+  background-color: #fff;
 }
