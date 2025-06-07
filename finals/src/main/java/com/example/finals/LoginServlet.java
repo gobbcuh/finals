@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet("/api/login")
 public class LoginServlet extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     private UserService userService = new UserServiceImpl();
 
     @Override
@@ -19,15 +21,15 @@ public class LoginServlet extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
 
         // Log all request parameters
-        System.out.println("Received request parameters:");
-        req.getParameterMap()
-                .forEach((key, value) -> System.out.println("Param: " + key + " = " + String.join(", ", value)));
+        LOGGER.info("Received request parameters:");
+        req.getParameterMap().forEach((key, value) -> 
+            LOGGER.info("Param: " + key + " = " + String.join(", ", value)));
 
         try {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
-            System.out.println("Extracted email: " + email);
-            System.out.println("Extracted password: " + password);
+            LOGGER.info("Extracted email: " + email);
+            LOGGER.info("Extracted password: " + password);
 
             if (email == null || password == null) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -46,6 +48,7 @@ public class LoginServlet extends HttpServlet {
                 mapper.writeValue(resp.getWriter(), new ResponseMessage("Invalid email or password"));
             }
         } catch (Exception e) {
+            LOGGER.severe("Error: " + e.getMessage());
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             mapper.writeValue(resp.getWriter(), new ResponseMessage("Login failed: " + e.getMessage()));
