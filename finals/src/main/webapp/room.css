@@ -189,6 +189,7 @@ header {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  min-height: 450px; /* Increased minimum height for more space */
 }
 
 .reservation-content h2 {
@@ -222,7 +223,7 @@ header {
 
 .button-group {
   text-align: center;
-  padding: 20px 0;
+  padding: 30px 0; /* Increased padding for extra space below */
   border-top: 1px solid #ccc;
   background-color: rgba(255, 245, 245, 0.95);
   margin-top: auto; /* Push to bottom */
