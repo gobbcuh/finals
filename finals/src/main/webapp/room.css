@@ -185,8 +185,10 @@ header {
   max-width: 500px;
   text-align: left;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  max-height: 90vh; /* Allow scrolling */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .reservation-content h2 {
@@ -220,7 +222,10 @@ header {
 
 .button-group {
   text-align: center;
-  margin-top: 20px;
+  padding: 20px 0;
+  border-top: 1px solid #ccc;
+  background-color: rgba(255, 245, 245, 0.95);
+  margin-top: auto; /* Push to bottom */
 }
 
 .nav-button {
@@ -266,10 +271,11 @@ header {
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
-  text-align: center;
   margin-top: 50px;
+  display: flex;
+  gap: 30px;
 }
 
 .room-detail-container h1 {
@@ -278,6 +284,36 @@ header {
   margin: 0 0 30px;
   font-weight: 500;
   text-transform: uppercase;
+}
+
+.detail-sidebar {
+  flex: 0 0 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-sidebar h3 {
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+.detail-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.detail-sidebar ul li {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.detail-gallery {
+  flex: 1;
 }
 
 .detail-section {
@@ -291,6 +327,11 @@ header {
   border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.detail-image:hover {
+  transform: scale(1.02);
 }
 
 .detail-caption {
@@ -305,4 +346,5 @@ header {
   color: #444;
   margin: 0 0 30px;
   line-height: 1.6;
+  max-width: 600px;
 }

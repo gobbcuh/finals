@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Rooms - Covalent Hotel</title>
+	<title>Rooms</title>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,29 +30,29 @@
 			<h1>Our Rooms</h1>
 			<div class="room-grid">
 				<div class="room-card">
-					<a href="room-detail.html"><img src="elements/room1.jpg" alt="Deluxe Room" class="room-image"></a>
+					<a href="room-detail-deluxe.html"><img src="elements/room1.jpg" alt="Deluxe Room" class="room-image"></a>
 					<h2>Deluxe Room</h2>
 					<p>Spacious room with modern amenities and a city view.</p>
-					<button class="reserve-button" onclick="showReservation()">Reserve</button>
+					<button class="reserve-button" onclick="showReservation('deluxe')">Reserve</button>
 				</div>
 				<div class="room-card">
-					<a href="room-detail.html"><img src="elements/room2.jpg" alt="Suite Room" class="room-image"></a>
+					<a href="room-detail-suite.html"><img src="elements/room2.jpg" alt="Suite Room" class="room-image"></a>
 					<h2>Suite Room</h2>
 					<p>Luxurious suite with a private balcony and jacuzzi.</p>
-					<button class="reserve-button" onclick="showReservation()">Reserve</button>
+					<button class="reserve-button" onclick="showReservation('suite')">Reserve</button>
 				</div>
 				<div class="room-card">
-					<a href="room-detail.html"><img src="elements/room3.jpg" alt="Family Room" class="room-image"></a>
+					<a href="room-detail-family.html"><img src="elements/room3.jpg" alt="Family Room" class="room-image"></a>
 					<h2>Family Room</h2>
 					<p>Family-friendly room with extra beds and play area.</p>
-					<button class="reserve-button" onclick="showReservation()">Reserve</button>
+					<button class="reserve-button" onclick="showReservation('family')">Reserve</button>
 				</div>
 			</div>
 		</div>
 		<div id="reservation-modal" class="reservation-modal">
 			<div class="reservation-content">
 				<h2>Reservation Details</h2>
-				<form>
+				<form id="reservation-form">
 					<div class="form-group">
 						<label>Check-in Date:</label>
 						<input type="date" name="checkin-date" required>
@@ -67,7 +67,7 @@
 					</div>
 					<div class="form-group">
 						<label>Select Room:</label>
-						<select name="room-type" required>
+						<select name="room-type" id="room-type" onchange="updateRoomNumbers()" required>
 							<option value="deluxe">Deluxe Room</option>
 							<option value="suite">Suite Room</option>
 							<option value="family">Family Room</option>
@@ -75,12 +75,12 @@
 					</div>
 					<div class="form-group">
 						<label>Room Numbers Available:</label>
-						<select name="room-number" required>
+						<select name="room-number" id="room-number" required>
 							<option value="101">101</option>
 							<option value="102">102</option>
 							<option value="103">103</option>
-							<option value="201">201</option>
-							<option value="202">202</option>
+							<option value="104">104</option>
+							<option value="105">105</option>
 						</select>
 					</div>
 					<div class="form-group">
@@ -91,11 +91,11 @@
 						<label>Note:</label>
 						<textarea name="note" rows="4"></textarea>
 					</div>
-					<div class="button-group">
-						<button type="button" class="nav-button" onclick="hideReservation()">Previous</button>
-						<button type="submit" class="nav-button">Next</button>
-					</div>
 				</form>
+				<div class="button-group">
+					<button type="button" class="nav-button" onclick="hideReservation()">Previous</button>
+					<button type="submit" form="reservation-form" class="nav-button">Next</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -142,7 +142,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Modal functionality
     const modal = document.getElementById('reservation-modal');
-    window.showReservation = function() {
+    window.showReservation = function(roomType) {
+        const roomTypeSelect = document.getElementById('room-type');
+        roomTypeSelect.value = roomType;
+        updateRoomNumbers();
         modal.style.display = 'block';
     };
     window.hideReservation = function() {
@@ -153,6 +156,34 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'none';
         }
     };
+
+    // Update room numbers based on room type
+    window.updateRoomNumbers = function() {
+        const roomType = document.getElementById('room-type').value;
+        const roomNumberSelect = document.getElementById('room-number');
+        roomNumberSelect.innerHTML = '';
+        let numbers;
+        switch (roomType) {
+            case 'deluxe':
+                numbers = [101, 102, 103, 104, 105];
+                break;
+            case 'suite':
+                numbers = [201, 202, 203, 204, 205];
+                break;
+            case 'family':
+                numbers = [301, 302, 303, 304, 305];
+                break;
+        }
+        numbers.forEach(num => {
+            const option = document.createElement('option');
+            option.value = num;
+            option.text = num;
+            roomNumberSelect.appendChild(option);
+        });
+    };
+
+    // Initialize with default room type
+    updateRoomNumbers();
 });
 </script>
 </body>

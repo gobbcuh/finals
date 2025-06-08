@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Deluxe Room</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="room.css">
+</head>
+<body>
+<header>
+	<img src="elements/logo.png" alt="Hexagon Icon" class="header-icon">
+	<div class="search-menu">
+		<button class="search-toggle">🔍︎</button>
+		<div class="menu">☰</div>
+		<div class="dropdown-menu">
+			<a href="#account">Account</a>
+			<a href="#logout">Log out</a>
+			<a href="#faqs">FAQs</a>
+		</div>
+	</div>
+</header>
+<main>
+	<div class="background-overlay">
+		<div class="room-detail-container">
+			<div class="detail-sidebar">
+				<h3>Room Features</h3>
+				<ul>
+					<li>400 sq ft</li>
+					<li>King-sized bed</li>
+					<li>City view</li>
+					<li>Mini-bar</li>
+					<li>Wi-Fi</li>
+				</ul>
+				<h3>Amenities</h3>
+				<ul>
+					<li>Daily housekeeping</li>
+					<li>24/7 room service</li>
+					<li>Smart TV</li>
+				</ul>
+			</div>
+			<div class="detail-gallery">
+				<div class="detail-section">
+					<img src="elements/room-interior1.jpg" alt="Overview" class="detail-image">
+					<p class="detail-caption">Overview: Spacious and modern with a stunning city view.</p>
+				</div>
+				<div class="detail-section">
+					<img src="elements/room-bathroom.jpg" alt="Bathroom" class="detail-image">
+					<p class="detail-caption">Bathroom: Sleek marble shower with premium toiletries.</p>
+				</div>
+				<div class="detail-section">
+					<img src="elements/room-beds.jpg" alt="Beds" class="detail-image">
+					<p class="detail-caption">Beds: King-sized with plush linens.</p>
+				</div>
+				<p class="detail-description">The Deluxe Room offers 400 sq ft of elegant space, featuring a king-sized bed, a marble bathroom, and a breathtaking city view. Perfect for business travelers or couples, it includes a mini-bar, complimentary Wi-Fi, and modern amenities.</p>
+				<button class="reserve-button" onclick="window.location.href='room.html'">Back to Rooms</button>
+			</div>
+		</div>
+	</div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.querySelector('.menu');
+    const dropdown = document.querySelector('.dropdown-menu');
+
+    if (!menu || !dropdown) {
+        console.error('Menu or dropdown not found in DOM');
+        return;
+    }
+
+    console.log('Menu and dropdown elements found:', menu, dropdown);
+
+    document.querySelector('.search-toggle').addEventListener('click', function() {
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search';
+        searchInput.className = 'search-input';
+        this.parentNode.insertBefore(searchInput, this.nextSibling);
+        this.style.display = 'none';
+        searchInput.focus();
+        searchInput.addEventListener('blur', function() {
+            this.remove();
+            document.querySelector('.search-toggle').style.display = 'block';
+        });
+    });
+
+    menu.addEventListener('click', function(event) {
+        console.log('Menu clicked, current dropdown display:', dropdown.style.display);
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        console.log('Dropdown display set to:', dropdown.style.display);
+        event.stopPropagation();
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!dropdown.contains(event.target) && !menu.contains(event.target)) {
+            console.log('Clicked outside, hiding dropdown');
+            dropdown.style.display = 'none';
+        }
+    });
+});
+</script>
+</body>
+</html>
