@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Rooms</title>
+	<title>Rooms - Covalent Hotel</title>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,12 +74,22 @@
 						</select>
 					</div>
 					<div class="form-group">
+						<label>Room Numbers Available:</label>
+						<select name="room-number" required>
+							<option value="101">101</option>
+							<option value="102">102</option>
+							<option value="103">103</option>
+							<option value="201">201</option>
+							<option value="202">202</option>
+						</select>
+					</div>
+					<div class="form-group">
 						<label>Hours:</label>
 						<input type="number" name="hours" min="1" required>
 					</div>
 					<div class="form-group">
 						<label>Note:</label>
-						<textarea name="note" rows="3"></textarea>
+						<textarea name="note" rows="4"></textarea>
 					</div>
 					<div class="button-group">
 						<button type="button" class="nav-button" onclick="hideReservation()">Previous</button>
@@ -104,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelector('.search-toggle').addEventListener('click', function() {
         const searchInput = document.createElement('input');
-        searchInput.type = 'date';
+        searchInput.type = 'text';
         searchInput.placeholder = 'Search';
         searchInput.className = 'search-input';
         this.parentNode.insertBefore(searchInput, this.nextSibling);

@@ -178,13 +178,15 @@ header {
 
 .reservation-content {
   background-color: rgba(255, 245, 245, 0.95);
-  margin: 10% auto;
+  margin: 5% auto;
   padding: 30px;
   border-radius: 15px;
   width: 80%;
   max-width: 500px;
   text-align: left;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  max-height: 90vh; /* Allow scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .reservation-content h2 {
@@ -218,6 +220,7 @@ header {
 
 .button-group {
   text-align: center;
+  margin-top: 20px;
 }
 
 .nav-button {
@@ -238,34 +241,68 @@ header {
   background-color: #333;
 }
 
-/* Add to room.css */
+/* Custom scrollbar for modal */
+.reservation-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.reservation-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.reservation-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.reservation-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Room Detail Styles */
 .room-detail-container {
   background-color: rgba(255, 255, 255, 0.9);
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  max-width: 800px;
+  max-width: 1000px;
   width: 100%;
   text-align: center;
   margin-top: 50px;
 }
 
+.room-detail-container h1 {
+  font-size: 36px;
+  color: #000;
+  margin: 0 0 30px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.detail-section {
+  margin-bottom: 30px;
+}
+
 .detail-image {
   width: 100%;
+  max-width: 600px;
   height: auto;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.room-detail-container h1 {
-  font-size: 32px;
-  color: #000;
-  margin: 0 0 20px;
-  font-weight: 500;
-}
-
-.room-detail-container p {
-  font-size: 18px;
+.detail-caption {
+  font-size: 16px;
   color: #666;
+  text-align: center;
+  font-style: italic;
+}
+
+.detail-description {
+  font-size: 18px;
+  color: #444;
   margin: 0 0 30px;
+  line-height: 1.6;
 }
