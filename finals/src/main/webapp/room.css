@@ -232,6 +232,7 @@ header {
 .nav-button {
   padding: 10px 25px;
   margin: 0 10px;
+  margin-bottom: 30px;
   background-color: #000;
   border: none;
   border-radius: 20px;
